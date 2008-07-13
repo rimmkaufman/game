@@ -59,8 +59,11 @@ until exit_game_loop do
 			case event.key
 				when K_Q  	
 					exit_game_loop = true
-				when K_ESCAPE
+				when K_ESCAPE 
 					game_paused = ! game_paused
+					Sound::toggle_pause
+				when K_S 
+					Sound::toggle_volume
 			end
 		end
 			ship.handle_event(event) if ship  	# handle ship keyboard events 		

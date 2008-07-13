@@ -1,3 +1,35 @@
+class Rubygame::Sound
+	@@active_sounds = Array.new
+	alias :play_original :play 
+	def play
+		@@active_sounds.delete_if { |s| s.stopped?}
+		@@active_sounds.push(self)
+		self.play_original
+	end
+	
+	def self.toggle_pause
+		if @@active_sounds.size > 0 then
+			if @@active_sounds[0].paused? then
+				@@active_sounds.each {|s| s.unpause}
+			else
+				@@active_sounds.each {|s| s.pause}
+			end
+		end
+	end
+
+	def self.toggle_volume
+		if @@active_sounds.size > 0 then
+			if @@active_sounds[0].volume > 0 then
+				@@active_sounds.each {|s| s.volume = 0}
+			else
+				@@active_sounds.each {|s| s.volume = 1}
+			end
+		end
+	end
+
+
+	
+end
 
 class Rubygame::Surface
 	Surface.autoload_dirs = %w(images)
@@ -7,14 +39,6 @@ class Rubygame::Sound
 	Sound.autoload_dirs = %w(sounds)
 end
 
-
-#class Numeric
-#	def bound(a,b)
-#		if self < a then return a end
-#		if self > b then return b end
-#		return self
-#	end
-#end
 
 class Array
 	def to_s
@@ -51,17 +75,3 @@ module Math
 	
 end
 
-module Rubygame
-	
-	def load_sound(name)
-    return nil unless (Rubygame::VERSIONS[:sdl_mixer] != nil)
-    begin
-        sound = Rubygame::Mixer::Sample.load_audio(name)
-        return sound
-    rescue Rubygame::SDLError
-        puts "Cannot load sound " + name
-        exit
-    end
-	end
-
-end
