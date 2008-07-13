@@ -22,7 +22,7 @@ class ScrollSprite
 	def load_frames() 	raise 'virtual' end
 
 	def handle_collision
-		SpriteGroup::add(Explosion.new(self.rect.x, self.rect.y))
+		SpriteGroup.add(Explosion.new(self.rect.x, self.rect.y))
 		SpriteGroup.kill(self)
 	end
 

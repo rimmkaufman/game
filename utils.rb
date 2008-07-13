@@ -1,5 +1,6 @@
 class Rubygame::Sound
 	@@active_sounds = Array.new
+	@@active_sounds_volume = Hash.new
 	alias :play_original :play 
 	def play
 		@@active_sounds.delete_if { |s| s.stopped?}
@@ -20,9 +21,12 @@ class Rubygame::Sound
 	def self.toggle_volume
 		if @@active_sounds.size > 0 then
 			if @@active_sounds[0].volume > 0 then
-				@@active_sounds.each {|s| s.volume = 0}
+				@@active_sounds.each {	|s| 
+					@@active_sounds_volume[s.object_id] = s.volume
+					s.volume = 0	
+				}
 			else
-				@@active_sounds.each {|s| s.volume = 1}
+				@@active_sounds.each {|s| s.volume = @@active_sounds_volume[s.object_id] || 1.0}
 			end
 		end
 	end

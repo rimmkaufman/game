@@ -4,7 +4,7 @@ include Rubygame
 require "caveconstants"
 require "utils"
 require "scrollsprite"
-
+require 'spritegroup'
 
 
 class Bullet < ScrollSprite
@@ -19,10 +19,12 @@ class Bullet < ScrollSprite
 		@frame_delay_ms = 250
    	@groups = [:all, :can_kill, :can_be_killed]
 		@depth = 25 
-		end
+		Sound['singleshot.wav'].play
+	end
 
 	def handle_collision
-		SpriteGroup.kill(self)  # bullets dont explode, but they do vanish.  maybe a little explosion?
+		SpriteGroup.add(Explosion.new(self.rect.x, self.rect.y, 'smallexplosion16.bmp', 16, 16,16))
+		SpriteGroup.kill(self)
 	end
 
 	def load_frames
