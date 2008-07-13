@@ -93,8 +93,6 @@ end
 class ImageScrollSprite < ScrollSprite
 	
 	def load_frames
-			#return @@loaded_frames[@img_filename] if @@loaded_frames[@img_filename] 
-			#@@loaded_frames[@img_filename] = [Surface.load_image(@img_filename)]
 			return Surface[@img_filename]
 		end
 	

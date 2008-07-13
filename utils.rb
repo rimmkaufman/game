@@ -3,6 +3,11 @@ class Rubygame::Surface
 	Surface.autoload_dirs = %w(images)
 end
 
+class Rubygame::Sound
+	Sound.autoload_dirs = %w(sounds)
+end
+
+
 #class Numeric
 #	def bound(a,b)
 #		if self < a then return a end
