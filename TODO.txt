@@ -1,9 +1,32 @@
 
 == IMMEDIATE TO DO ==
 
-better collision detection ship and ground
+move sound into its own class
+
+bullet noises
+
+small bullet explosions
+
+alient intelligence module
+
+scoreboard and scoring
+
+levels system -- different aliens
+
+ground targets, ground enemies (ground guns which track ship), bombs
+
+aliens which shoot, and so shields
+
+aliens w/ colrects > rects, so they "feel" crash before it occurs and take evasisive action
+
+cleanup dirs -- move images and sounds to their own subdirs
+
+
+
 read changes in rubygame 2.3 and encompass
 
 
 
 == DONE ==
+
+better collision detection ship and ground

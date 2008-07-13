@@ -93,10 +93,10 @@ end
 class ImageScrollSprite < ScrollSprite
 	
 	def load_frames
-			return @@loaded_frames[@img_filename] if @@loaded_frames[@img_filename] 
-			@@loaded_frames[@img_filename] = [Surface.load_image(@img_filename)]
-			return @@loaded_frames[@img_filename]
-	end
+			#return @@loaded_frames[@img_filename] if @@loaded_frames[@img_filename] 
+			#@@loaded_frames[@img_filename] = [Surface.load_image(@img_filename)]
+			return Surface[@img_filename]
+		end
 	
 	def initialize(x, y, img_filename)
 		@img_filename = img_filename
@@ -117,7 +117,8 @@ class MultipleImageScrollSprite < ScrollSprite
 	
 	def load_frames
 			return @@loaded_frames[@img_filename] if @@loaded_frames[@img_filename] 
-			allframes = Surface.load_image(@img_filename)
+			allframes = Surface[@img_filename]
+			
 			size = [@frame_w, @frame_h]
 			frames = Array.new(@num_frames) { |i| 
 			frames_per_row = allframes.width / @frame_w

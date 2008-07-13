@@ -1,11 +1,15 @@
 
-class Numeric
-	def bound(a,b)
-		if self < a then return a end
-		if self > b then return b end
-		return self
-	end
+class Rubygame::Surface
+	Surface.autoload_dirs = %w(images)
 end
+
+#class Numeric
+#	def bound(a,b)
+#		if self < a then return a end
+#		if self > b then return b end
+#		return self
+#	end
+#end
 
 class Array
 	def to_s
