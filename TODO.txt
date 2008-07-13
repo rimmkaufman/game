@@ -1,0 +1,9 @@
+
+== IMMEDIATE TO DO ==
+
+better collision detection ship and ground
+read changes in rubygame 2.3 and encompass
+
+
+
+== DONE ==
