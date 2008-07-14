@@ -23,7 +23,7 @@ class Bullet < ScrollSprite
 	end
 
 	def handle_collision
-		SpriteGroup.add(Explosion.new(self.rect.x, self.rect.y, 'smallexplosion16.bmp', 16, 16,16))
+		SpriteGroup.add(Explosion.new(self.rect.x, self.rect.y, 'smallexplosion16.bmp', 'little-explode.wav',16, 16,16))
 		SpriteGroup.kill(self)
 	end
 
