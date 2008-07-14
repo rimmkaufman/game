@@ -35,7 +35,7 @@ class ScrollSprite
 	
 	def initialize(x, y)
 		super()
-		@groups = Array.new	
+		@groups = Array.new	 ########## needed?
 		@last_frame_persist = true # default behavior, use accessor to change
 		@last_frame_loop  = false # default behavior, use accessor to change
 		@frame_delay_ms = 150 # default delay, use accessor to change

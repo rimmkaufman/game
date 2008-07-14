@@ -5,10 +5,17 @@ require "caveconstants"
 require "utils"
 require "scrollsprite"
 require "bullet"
+require "shield"
 
 class Ship <  MultipleImageScrollSprite
 
 	attr_accessor :vdir, :adir;
+
+	def handle_collision
+		return if @shields_on # collisions don't matter, even terrain??
+		super()
+	end
+
 
 	def initialize
 		x = SHIP_XMIN
@@ -22,6 +29,7 @@ class Ship <  MultipleImageScrollSprite
 		@depth = 10 
 		@next_bullet_birth_time = 0
 		@am_firing = false
+		@shields_on = false
 		@groups = [:all, :can_kill,  :can_be_killed, :ship]
 	end
 
@@ -70,6 +78,13 @@ class Ship <  MultipleImageScrollSprite
 				 			@adir = -1
 				 		when K_SPACE
 				 			@am_firing = true
+    				when K_RETURN
+    					@shields_on = ! @shields_on
+    					if (@shields_on) then
+    						SpriteGroup.add(Shield.new(self.rect.cx, self.rect.cy))
+    					else 
+    						SpriteGroup.kill_group(:shield)
+    					end
 			 		end
 
 			when KeyUpEvent 

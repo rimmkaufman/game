@@ -5,7 +5,7 @@ class SpriteGroup
 	def initialize
 		@@g = Hash.new
 		@@s = Hash.new
-		groups = [:all, :alien, :can_be_killed, :can_kill, :distant_terrain, :ship, :terrain] 
+		groups = [:all, :alien, :can_be_killed, :can_kill, :distant_terrain, :ship, :terrain, :shield] 
     groups.each {|g| @@g[g] = Array.new}
 	end
 
@@ -57,6 +57,10 @@ class SpriteGroup
 			@@g[g].delete_if {|s| s.object_id == id}
 		end
 		@@s.delete(id)
+	end
+
+	def self::kill_group(g)
+		sprites(g).each {|s| kill(s)}
 	end
 
 	def self::groups(sprite)

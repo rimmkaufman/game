@@ -65,6 +65,10 @@ module Math
 		end
 	end
 	
+	def rand_between(a,b)
+		return a + rand(b-a)
+	end
+	
 	def bernoulli?(p)
 		rand(10000)/10000.0 < p
 	end 
