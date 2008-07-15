@@ -27,7 +27,7 @@ screen.update()
 # preload sounds and images to avoid hesitation
 Dir.foreach("images") {|f| if  f =~ /\.bmp$/ then Surface[f] end}
 Dir.foreach("sounds") { |f| if f =~/\.wav$/ then Sound[f] end}
-Sound.toggle_volume
+Sound.all_sounds_off()
 
 
 queue = Rubygame::EventQueue.new
@@ -86,9 +86,8 @@ until exit_game_loop do
 	end
 	
 	if bernoulli?(0.01) then
-		if SpriteGroup.sprites(:alien).size == 0
-			SpriteGroup::add(RedAlien.new(XMAX, TERRAIN_BOTTOM - 50 - rand(300)))
-		end
+			SpriteGroup::add(RedAlien.new(XMAX, 
+				TERRAIN_BOTTOM - TERRAIN_TRIANGLE_MAX_HEIGHT - rand(200)))
 	end		
 	
 	clock.tick

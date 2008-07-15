@@ -20,6 +20,8 @@ class RedAlien <MultipleImageScrollSprite
    	@groups = [:all, :can_kill, :can_be_killed, :alien]
 		@depth = 10 
 		end
+
+		def col_rect_padding() return [10,10] end
 		
 		def update
 			endtime = Clock.runtime + 2000; 

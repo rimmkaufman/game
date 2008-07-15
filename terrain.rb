@@ -41,7 +41,9 @@ class TerrainTriangle < TriangleScrollSprite
 	def bound_vy(vy) return 0 end    # terrain doesn't sink under gravity!
 	def handle_offscreen_right() end # terrain can bleed off to right
  	def initialize
-   	super(50,100, 100,50, BROWN)
+ 		tmax = TERRAIN_TRIANGLE_MAX_HEIGHT
+ 		tmin = TERRAIN_TRIANGLE_MIN_HEIGHT
+   	super(50,100, tmin, tmax-tmin, BROWN)
 	  @depth = 20
    	@groups = [:all, :terrain, :can_kill]
    	end

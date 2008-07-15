@@ -13,6 +13,7 @@ class SpriteGroup
 		collided = Set.new
 		for cbk in @@g[:can_be_killed] do
 			for ck in @@g[:can_kill] do
+				next if ck == cbk # can't kill self
 				if cbk.collide_sprite?(ck) then
 					collided.add(cbk)
 				end

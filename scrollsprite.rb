@@ -15,7 +15,7 @@ class ScrollSprite
  
 	def handle_after_last_frame() SpriteGroup.kill(self); end
   def handle_offscreen_left() SpriteGroup.kill(self) end
-  def handle_top() SpriteGroup.kill(self) end
+  def handle_offscreen_top() SpriteGroup.kill(self) end
 	def handle_offscreen_right() SpriteGroup.kill(self) end
   def bound_vx(vx)	return vx  end
 	def bound_vy(vy)	 return vy  end
@@ -23,13 +23,23 @@ class ScrollSprite
 	def load_frames() 	raise 'virtual' end
 	# in most places, we kill sprite by call SpriteGroup.kill, but just in case called on sprite, let's handle
 	def kill() SpriteGroup.kill(self) end
+	# rubygame does something odd  with col_rect, making it write-only, so we'll overload and handle ourselves
+	def col_rect() return @my_col_rect end
+	def col_rect=(val)  @my_col_rect = val end
+		
 			
 	def handle_collision
 		SpriteGroup.add(Explosion.new(self.rect.x, self.rect.y))
 		SpriteGroup.kill(self)
 	end
 
-	attr_accessor :vx, :ax, :vy, :ay, :last_frame_persist, :last_frame_loop, :frame_delay_ms, :groups
+	# enlarge or shrink col_rect relative to rect
+	# override this function
+	def col_rect_padding
+		return [0,0] # default is no padding, thus col_rect = rect. 
+	end		
+
+	attr_accessor :vx, :ax, :vy, :ay, :last_frame_persist, :last_frame_loop, :frame_delay_ms, :groups 	
 	
 	# Initialize a new ScrollSprite
 
@@ -44,10 +54,12 @@ class ScrollSprite
 		@frame_delay_ms = 150 # default delay, use accessor to change
 		@last_frame_time = 0
 		@frames = load_frames()
-    max_h = @frames.map{|i| i.h}.max # find height of tallest frame
+    @frames.each { |f| f.set_colorkey(@@bg_color)} 
+  	max_h = @frames.map{|i| i.h}.max # find height of tallest frame
     max_w = @frames.map{|i| i.w}.max # find width of widest frame
-    @rect = Rect.new(x,y, max_w, max_h)
-    @frames.each { |x| x.set_colorkey(@@bg_color)} 
+  	@rect = Rect.new(x,y, max_w, max_h)
+  	xpad, ypad = *col_rect_padding()
+  	@col_rect = Rect.new(x-xpad,y-ypad, max_w + 2*xpad, max_h + 2*ypad) 
     @current_frame = 0 # frame counter
   	@ay = GRAVITY_VACCEL # everything falls, unless we override    
 	  @ax = 0
@@ -90,6 +102,8 @@ class ScrollSprite
   	if @rect.top < YMIN then handle_offscreen_top() end
 	end  	
 
+	private 
+	
 end
 
 class ImageScrollSprite < ScrollSprite

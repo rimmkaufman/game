@@ -1,14 +1,15 @@
 class Rubygame::Sound
 	@@active_sounds = Array.new
 	@@active_sounds_volume = Hash.new
+	@@sound_on = true
 	alias :play_original :play 
 	def play
 		@@active_sounds.delete_if { |s| s.stopped?}
 		@@active_sounds.push(self)
-		self.play_original
+		self.play_original if @@sound_on
 	end
 	
-	def self.toggle_pause
+	def self.toggle_all_sounds_pause
 		if @@active_sounds.size > 0 then
 			if @@active_sounds[0].paused? then
 				@@active_sounds.each {|s| s.unpause}
@@ -18,21 +19,10 @@ class Rubygame::Sound
 		end
 	end
 
-	def self.toggle_volume
-		if @@active_sounds.size > 0 then
-			if @@active_sounds[0].volume > 0 then
-				@@active_sounds.each {	|s| 
-					@@active_sounds_volume[s.object_id] = s.volume
-					s.volume = 0	
-				}
-			else
-				@@active_sounds.each {|s| s.volume = @@active_sounds_volume[s.object_id] || 1.0}
-			end
-		end
-	end
-
-
-	
+	def self.all_sounds_on() 	@@sound_on = true end
+	def self.all_sounds_off() 	@@sound_on = false end
+	def self.all_sounds_toggle_on_off() 		@@sound_on = !@@sound_on end
+			
 end
 
 class Rubygame::Surface
