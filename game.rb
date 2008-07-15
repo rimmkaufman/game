@@ -13,7 +13,6 @@ include Math
 
 Rubygame.init
 
-
 screen = Rubygame::Screen.set_mode([XMAX, YMAX])
 screen.title = 'scrolling terrain'
 

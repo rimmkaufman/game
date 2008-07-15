@@ -5,9 +5,9 @@ class ScrollSprite
 			sprite_one = self
 			sprite_two = sprite
 							
-			# use col_rect if available
-			rect_one = sprite_one.col_rect  ? sprite_one.col_rect.normalize : sprite_one.rect.normalize
-			rect_two = sprite_two.col_rect  ? sprite_two.col_rect.normalize  : sprite_two.rect.normalize
+			# use col_rect for box collision
+			rect_one = sprite_one.col_rect.normalize  # ? sprite_one.col_rect.normalize : sprite_one.rect.normalize
+			rect_two = sprite_two.col_rect.normalize   #? sprite_two.col_rect.normalize  : sprite_two.rect.normalize
 						
 			img_one = sprite_one.image
 			img_two = sprite_two.image

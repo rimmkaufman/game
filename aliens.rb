@@ -21,7 +21,7 @@ class RedAlien <MultipleImageScrollSprite
 		@depth = 10 
 		end
 
-		def col_rect_padding() return [90,90] end
+		def col_rect_padding() return [150,150] end
 
 
 	def handle_collision(hit_by)
