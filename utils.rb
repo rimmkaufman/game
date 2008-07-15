@@ -1,6 +1,6 @@
 class BoolTimer
-	def initialize(delay_ms)
-		@go_false_time = Clock.runtime + delay_ms
+	def initialize(delay_secs)
+		@go_false_time = Clock.runtime + delay_secs * 1000
 	end
 	def status?
 		return Clock.runtime < @go_false_time

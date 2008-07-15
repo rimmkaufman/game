@@ -19,7 +19,6 @@ class RedAlien <MultipleImageScrollSprite
 		@frame_delay_ms = 250
    	@groups = [:all, :can_kill, :can_be_killed, :alien]
 		@depth = 10 
-		@have_reversed = false
 		end
 
 		def col_rect_padding() return [90,90] end
@@ -34,23 +33,23 @@ class RedAlien <MultipleImageScrollSprite
 
 		
 		def update
-			
-			booltimer = BoolTimer.new(4000)
 			Bda::do('red alien movement', self, 
-				lambda {|obj| booltimer.status? }, 
+				lambda {|obj| @timer.status? }, 
 				lambda {|obj| 
 					@dir = Ftor.new_am( rand_between(0, 2*PI), RED_ALIEN_SPEED);
 					obj.vx, obj.vy = @dir.to_a
-					@booltimer = BoolTimer.new(RED_ALIEN_DIR_SECS)
+					@timer = BoolTimer.new(RED_ALIEN_DIR_SECS)
+					@have_reversed = false
 				},
 				lambda {|obj| 
 					if obj.near_miss and  !@have_reversed then 
+						p "reversing, obj=#{obj.object_id}"	
 						@dir =-@dir;  
 						obj.vx, obj.vy = @dir.to_a; 
-						@booltimer = BoolTimer.new(RED_ALIEN_DIR_SECS)
+						@timer = BoolTimer.new(RED_ALIEN_DIR_SECS)
 						@have_reversed = true				
 				end},
-				lambda {|obj| obj.vy = 0; @have_reversed=false}
+				lambda {|obj| obj.vx = 0; obj.vy = 0; @have_reversed=false}
 			)
 		super	
 		end
