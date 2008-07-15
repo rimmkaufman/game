@@ -66,7 +66,11 @@ module Math
 	end
 	
 	def rand_between(a,b)
-		return a + rand(b-a)
+		if a.class.to_s == 'Float' or b.class.to_s == 'Float' then
+			return a + (b-a) * rand  # if sent float(s), return floats
+		else 
+			return a + rand(b-a) # otherwise, return ints
+		end
 	end
 	
 	def bernoulli?(p)

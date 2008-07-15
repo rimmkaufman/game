@@ -24,6 +24,10 @@ background.fill(BG_COLOR)
 background.blit(screen, [0, 0]) # clear screen
 screen.update()
 
+# preload sounds and images to avoid hesitation
+Dir.foreach("images") {|f| if  f =~ /\.bmp$/ then Surface[f] end}
+Dir.foreach("sounds") { |f| if f =~/\.wav$/ then Sound[f] end}
+Sound.toggle_volume
 
 
 queue = Rubygame::EventQueue.new
@@ -46,6 +50,7 @@ SpriteGroup.add(Ship.new)
 exit_game_loop  = false
 game_paused = false
 next_ship_birth_time = 0
+
 
 until exit_game_loop do
 
@@ -81,7 +86,9 @@ until exit_game_loop do
 	end
 	
 	if bernoulli?(0.01) then
-		SpriteGroup::add(RedAlien.new(XMAX, TERRAIN_BOTTOM - 50 - rand(300)))
+		if SpriteGroup.sprites(:alien).size == 0
+			SpriteGroup::add(RedAlien.new(XMAX, TERRAIN_BOTTOM - 50 - rand(300)))
+		end
 	end		
 	
 	clock.tick

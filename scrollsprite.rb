@@ -15,12 +15,15 @@ class ScrollSprite
  
 	def handle_after_last_frame() SpriteGroup.kill(self); end
   def handle_offscreen_left() SpriteGroup.kill(self) end
+  def handle_top() SpriteGroup.kill(self) end
 	def handle_offscreen_right() SpriteGroup.kill(self) end
   def bound_vx(vx)	return vx  end
 	def bound_vy(vy)	 return vy  end
 	def bound_rect(r) return r end
 	def load_frames() 	raise 'virtual' end
-
+	# in most places, we kill sprite by call SpriteGroup.kill, but just in case called on sprite, let's handle
+	def kill() SpriteGroup.kill(self) end
+			
 	def handle_collision
 		SpriteGroup.add(Explosion.new(self.rect.x, self.rect.y))
 		SpriteGroup.kill(self)
@@ -85,7 +88,6 @@ class ScrollSprite
   	if @rect.right < XMIN then handle_offscreen_left() end
     if @rect.left > XMAX then handle_offscreen_right() end
   	if @rect.top < YMIN then handle_offscreen_top() end
-  	#### KILLME # if @rect.bottom  > YMAX then handle_offscreen_bottom() end
 	end  	
 
 end
