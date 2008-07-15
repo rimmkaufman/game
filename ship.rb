@@ -30,7 +30,7 @@ class Ship <  MultipleImageScrollSprite
 		@next_bullet_birth_time = 0
 		@am_firing = false
 		@shields_on = false
-		@groups = [:all, :can_kill,  :can_be_killed, :ship]
+		
 	end
 
 	def bound_rect(r) 

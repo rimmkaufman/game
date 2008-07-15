@@ -7,8 +7,10 @@ class BoolTimer
 	end
 end
 
-
-
+module Rubygame::Sprites::Sprite
+	def col_rect(); raise 'overriden'; end
+end
+		
 	
 class Rubygame::Sound
 	@@active_sounds = Array.new

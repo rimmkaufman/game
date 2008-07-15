@@ -61,6 +61,9 @@ class ScrollSprite
   	@rect = Rect.new(x,y, max_w, max_h)
   	xpad, ypad = *col_rect_padding()
   	@col_rect = Rect.new(x-xpad,y-ypad, max_w + 2*xpad, max_h + 2*ypad) 
+
+	 p "colrect isa #{@col_rect.class}"
+
     @current_frame = 0 # frame counter
   	@ay = GRAVITY_VACCEL # everything falls, unless we override    
 	  @ax = 0
