@@ -23,25 +23,22 @@ class ScrollSprite
 	def load_frames() 	raise 'virtual' end
 	# in most places, we kill sprite by call SpriteGroup.kill, but just in case called on sprite, let's handle
 	def kill() SpriteGroup.kill(self) end
-	# rubygame does something odd  with col_rect, making it write-only, so we'll overload and handle ourselves
-	def col_rect() return @my_col_rect end
-	def col_rect=(val)  @my_col_rect = val end
-		
 			
 	def handle_collision(hit_by)
 		SpriteGroup.add(Explosion.new(self.rect.x, self.rect.y))
 		SpriteGroup.kill(self)
 	end
 
-	# enlarge or shrink col_rect relative to rect
+	# enlarge or shrink collision_rect relative to rect
 	# override this function
-	def col_rect_padding
-		return [0,0] # default is no padding, thus col_rect = rect. 
+	def collision_rect_padding
+		return [0,0] # default is no padding, thus collision_rect = rect. 
 	end		
 
 	attr_accessor :vx, :ax, :vy,  :ay 
 	attr_accessor :last_frame_persist, :last_frame_loop, :frame_delay_ms, :groups 	
 	attr_accessor :near_miss	
+	attr_accessor :collision_rect
 	# Initialize a new ScrollSprite
 
 	# x:: x coord of top left
@@ -59,10 +56,10 @@ class ScrollSprite
   	max_h = @frames.map{|i| i.h}.max # find height of tallest frame
     max_w = @frames.map{|i| i.w}.max # find width of widest frame
   	@rect = Rect.new(x,y, max_w, max_h)
-  	xpad, ypad = *col_rect_padding()
-  	@col_rect = Rect.new(x-xpad,y-ypad, max_w + 2*xpad, max_h + 2*ypad) 
+  	xpad, ypad = *collision_rect_padding()
+  	@collision_rect = Rect.new(x-xpad,y-ypad, max_w + 2*xpad, max_h + 2*ypad) 
 
-	 p "colrect isa #{@col_rect.class}"
+	 p "colrect isa #{@collision_rect.class}"
 
     @current_frame = 0 # frame counter
   	@ay = GRAVITY_VACCEL # everything falls, unless we override    

@@ -30,7 +30,6 @@ class Ship <  MultipleImageScrollSprite
 		@next_bullet_birth_time = 0
 		@am_firing = false
 		@shields_on = false
-		
 	end
 
 	def bound_rect(r) 

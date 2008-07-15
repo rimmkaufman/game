@@ -3,13 +3,13 @@ class ScrollSprite
 	def collide_sprite?(sprite)
 		
 			sprite_one = self
-			p self.inspect
-			p self.col_rect; exit;
+		#	p self.inspect
+		#	p self.collision_rect; exit;
 			sprite_two = sprite
 							
-			# use col_rect for box collision
-			rect_one = sprite_one.col_rect.normalize  
-			rect_two = sprite_two.col_rect.normalize  
+			# use collision_rect for box collision
+			rect_one = sprite_one.collision_rect.normalize  
+			rect_two = sprite_two.collision_rect.normalize  
 						
 			img_one = sprite_one.image
 			img_two = sprite_two.image
@@ -22,7 +22,7 @@ class ScrollSprite
 				
 		    @near_miss = true;  # the rectangles collided, but perhaps the images haven't
 		        												
-		    # when doing pixel-level collisions, use real rect, not col_rect
+		    # when doing pixel-level collisions, use real rect, not collision_rect
 		    rect_one = self.rect.normalize
 				rect_two = sprite.rect.normalize
 		   	        												
