@@ -11,9 +11,9 @@ class Ship <  MultipleImageScrollSprite
 
 	attr_accessor :vdir, :adir;
 
-	def handle_collision
+	def handle_collision(hit_by)
 		return if @shields_on # collisions don't matter, even terrain??
-		super()
+		super(hit_by)
 	end
 
 

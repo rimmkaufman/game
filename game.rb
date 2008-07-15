@@ -29,6 +29,7 @@ Dir.foreach("images") {|f| if  f =~ /\.bmp$/ then Surface[f] end}
 Dir.foreach("sounds") { |f| if f =~/\.wav$/ then Sound[f] end}
 Sound.all_sounds_off()
 
+# Music['love.mp3'].play
 
 queue = Rubygame::EventQueue.new
 

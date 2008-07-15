@@ -4,7 +4,7 @@ class ScrollSprite
 		
 			sprite_one = self
 			sprite_two = sprite
-						
+							
 			# use col_rect if available
 			rect_one = sprite_one.col_rect  ? sprite_one.col_rect.normalize : sprite_one.rect.normalize
 			rect_two = sprite_two.col_rect  ? sprite_two.col_rect.normalize  : sprite_two.rect.normalize
@@ -17,7 +17,9 @@ class ScrollSprite
 		       													((rect_one.t > rect_two.t && rect_one.t < rect_two.b) or
 		        												(rect_two.t >  rect_one.t && rect_two.t < rect_one.b))
 	
-	
+				
+		    @near_miss = true;  # the rectangles collided, but perhaps the images haven't
+		        												
 		    # when doing pixel-level collisions, use real rect, not col_rect
 		    rect_one = self.rect.normalize
 				rect_two = sprite.rect.normalize

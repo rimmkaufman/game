@@ -28,7 +28,7 @@ class ScrollSprite
 	def col_rect=(val)  @my_col_rect = val end
 		
 			
-	def handle_collision
+	def handle_collision(hit_by)
 		SpriteGroup.add(Explosion.new(self.rect.x, self.rect.y))
 		SpriteGroup.kill(self)
 	end
@@ -39,8 +39,9 @@ class ScrollSprite
 		return [0,0] # default is no padding, thus col_rect = rect. 
 	end		
 
-	attr_accessor :vx, :ax, :vy, :ay, :last_frame_persist, :last_frame_loop, :frame_delay_ms, :groups 	
-	
+	attr_accessor :vx, :ax, :vy,  :ay 
+	attr_accessor :last_frame_persist, :last_frame_loop, :frame_delay_ms, :groups 	
+	attr_accessor :near_miss	
 	# Initialize a new ScrollSprite
 
 	# x:: x coord of top left
@@ -99,7 +100,7 @@ class ScrollSprite
   	@rect = bound_rect(@rect)
   	if @rect.right < XMIN then handle_offscreen_left() end
     if @rect.left > XMAX then handle_offscreen_right() end
-  	if @rect.top < YMIN then handle_offscreen_top() end
+  	if @rect.bottom < YMIN then handle_offscreen_top() end
 	end  	
 
 	private 

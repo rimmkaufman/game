@@ -22,7 +22,7 @@ class Bullet < ScrollSprite
 		Sound['singleshot.wav'].play
 	end
 
-	def handle_collision
+	def handle_collision(hit_by)
 		SpriteGroup.add(Explosion.new(self.rect.x, self.rect.y, 'smallexplosion16.bmp', 'little-explode.wav',16, 16,16))
 		SpriteGroup.kill(self)
 	end

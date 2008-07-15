@@ -10,17 +10,19 @@ class SpriteGroup
 	end
 
 	def self::handle_collisions
-		collided = Set.new
+		collided = Hash.new
 		for cbk in @@g[:can_be_killed] do
+			cbk.near_miss = false
 			for ck in @@g[:can_kill] do
 				next if ck == cbk # can't kill self
 				if cbk.collide_sprite?(ck) then
-					collided.add(cbk)
+					if !collided.key?(cbk) then collided[cbk] = Array.new end
+					collided[cbk].push(ck)
 				end
 			end
 		end
-		for cbk in collided do
-			cbk.handle_collision
+		for cbk in collided.keys do
+			cbk.handle_collision(collided[cbk]) # send handle_collision all the sprites which hit me
 		end
 	end
 			

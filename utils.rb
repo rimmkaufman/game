@@ -1,3 +1,15 @@
+class BoolTimer
+	def initialize(delay_ms)
+		@go_false_time = Clock.runtime + delay_ms
+	end
+	def status?
+		return Clock.runtime < @go_false_time
+	end
+end
+
+
+
+	
 class Rubygame::Sound
 	@@active_sounds = Array.new
 	@@active_sounds_volume = Hash.new
@@ -33,6 +45,9 @@ class Rubygame::Sound
 	Sound.autoload_dirs = %w(sounds)
 end
 
+class Rubygame::Music
+	Music.autoload_dirs = %w(music)
+end
 
 class Array
 	def to_s

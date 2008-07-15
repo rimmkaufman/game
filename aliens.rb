@@ -19,18 +19,38 @@ class RedAlien <MultipleImageScrollSprite
 		@frame_delay_ms = 250
    	@groups = [:all, :can_kill, :can_be_killed, :alien]
 		@depth = 10 
+		@have_reversed = false
 		end
 
-		def col_rect_padding() return [10,10] end
+		def col_rect_padding() return [90,90] end
+
+
+	def handle_collision(hit_by)
+		return if hit_by.all? {|s| s.class.to_s == 'RedAlien'} # red aliens are not fatal to eachother
+		SpriteGroup.add(Explosion.new(self.rect.x, self.rect.y))
+		SpriteGroup.kill(self)
+	end
+
+
 		
 		def update
-			endtime = Clock.runtime + 2000; 
-			dir = Ftor.new_am( rand_between(0, 2*PI), RED_ALIEN_SPEED)
+			
+			booltimer = BoolTimer.new(4000)
 			Bda::do('red alien movement', self, 
-				lambda {|obj| Clock.runtime < endtime}, 
-				lambda {|obj|  obj.vx, obj.vy = dir.to_a},
-				lambda {},
-				lambda {|obj| obj.vy = 0}
+				lambda {|obj| booltimer.status? }, 
+				lambda {|obj| 
+					@dir = Ftor.new_am( rand_between(0, 2*PI), RED_ALIEN_SPEED);
+					obj.vx, obj.vy = @dir.to_a
+					@booltimer = BoolTimer.new(RED_ALIEN_DIR_SECS)
+				},
+				lambda {|obj| 
+					if obj.near_miss and  !@have_reversed then 
+						@dir =-@dir;  
+						obj.vx, obj.vy = @dir.to_a; 
+						@booltimer = BoolTimer.new(RED_ALIEN_DIR_SECS)
+						@have_reversed = true				
+				end},
+				lambda {|obj| obj.vy = 0; @have_reversed=false}
 			)
 		super	
 		end
