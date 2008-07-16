@@ -12,11 +12,11 @@ class SpriteGroup
 	def self::handle_collisions
 		collided = Hash.new
 		for cbk in @@g[:can_be_killed] do
-			cbk.near_miss = false
+			cbk.near_miss = Set.new()
 			for ck in @@g[:can_kill] do
 				next if ck == cbk # can't kill self
 				if cbk.collide_sprite?(ck) then
-					if !collided.key?(cbk) then collided[cbk] = Array.new end
+					if !collided.key?(cbk) then collided[cbk] = Array.new end # perhaps better as a set?
 					collided[cbk].push(ck)
 				end
 			end

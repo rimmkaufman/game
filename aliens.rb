@@ -19,10 +19,8 @@ class RedAlien <MultipleImageScrollSprite
 		@frame_delay_ms = 250
    	@groups = [:all, :can_kill, :can_be_killed, :alien]
 		@depth = 10 
+		@collision_rect_padding_x = @collision_rect_padding_y = 20
 		end
-
-		def collision_rect_padding() return [150,150] end
-
 
 	def handle_collision(hit_by)
 		return if hit_by.all? {|s| s.class.to_s == 'RedAlien'} # red aliens are not fatal to eachother
@@ -30,8 +28,6 @@ class RedAlien <MultipleImageScrollSprite
 		SpriteGroup.kill(self)
 	end
 
-
-		
 		def update
 			Bda::do('red alien movement', self, 
 				lambda {|obj| @timer.status? }, 
@@ -42,7 +38,7 @@ class RedAlien <MultipleImageScrollSprite
 					@have_reversed = false
 				},
 				lambda {|obj| 
-					if obj.near_miss and  !@have_reversed then 
+					if (obj.near_miss) and (obj.near_miss.any? {|s| s.class.to_s =~ /^Terrain/}) and  (true or !@have_reversed)	 then 
 						p "reversing, obj=#{obj.object_id}"	
 						@dir =-@dir;  
 						obj.vx, obj.vy = @dir.to_a; 

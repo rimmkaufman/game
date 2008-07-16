@@ -36,9 +36,9 @@ class ScrollSprite
 	end		
 
 	attr_accessor :vx, :ax, :vy,  :ay 
-	attr_accessor :last_frame_persist, :last_frame_loop, :frame_delay_ms, :groups 	
-	attr_accessor :near_miss	
-	attr_accessor :collision_rect
+	attr_accessor :last_frame_persist, :last_frame_loop, :frame_delay_ms
+	attr_accessor :near_miss
+	attr_accessor :collision_rect_padding_x, :collision_rect_padding_y	
 	# Initialize a new ScrollSprite
 
 	# x:: x coord of top left
@@ -46,7 +46,6 @@ class ScrollSprite
 	
 	def initialize(x, y)
 		super()
-		@groups = Array.new	 ########## needed?
 		@last_frame_persist = true # default behavior, use accessor to change
 		@last_frame_loop  = false # default behavior, use accessor to change
 		@frame_delay_ms = 150 # default delay, use accessor to change
@@ -56,18 +55,15 @@ class ScrollSprite
   	max_h = @frames.map{|i| i.h}.max # find height of tallest frame
     max_w = @frames.map{|i| i.w}.max # find width of widest frame
   	@rect = Rect.new(x,y, max_w, max_h)
-  	xpad, ypad = *collision_rect_padding()
-  	@collision_rect = Rect.new(x-xpad,y-ypad, max_w + 2*xpad, max_h + 2*ypad) 
-
-	 p "colrect isa #{@collision_rect.class}"
-
-    @current_frame = 0 # frame counter
+  	@collision_rect_padding_x = 0 # default is no padding
+  	@collision_rect_padding_y = 0 # default is no padding
+  	@current_frame = 0 # frame counter
   	@ay = GRAVITY_VACCEL # everything falls, unless we override    
 	  @ax = 0
 	  @vx = 0
 	  @vy = 0
 	end
-  
+  	
 	# Update sprite, showing correct frame, scrolling horizontally left, 
   def update 
 		# determine if we need to go next frame	
@@ -102,8 +98,6 @@ class ScrollSprite
     if @rect.left > XMAX then handle_offscreen_right() end
   	if @rect.bottom < YMIN then handle_offscreen_top() end
 	end  	
-
-	private 
 	
 end
 

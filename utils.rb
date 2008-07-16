@@ -5,12 +5,7 @@ class BoolTimer
 	def status?
 		return Clock.runtime < @go_false_time
 	end
-end
-
-module Rubygame::Sprites::Sprite
-	def col_rect(); raise 'overriden'; end
-end
-		
+end		
 	
 class Rubygame::Sound
 	@@active_sounds = Array.new
