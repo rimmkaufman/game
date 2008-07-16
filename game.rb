@@ -90,6 +90,12 @@ until exit_game_loop do
 				TERRAIN_BOTTOM - TERRAIN_TRIANGLE_MAX_HEIGHT - rand(200)))
 	end		
 	
+	if bernoulli?(0.01) then
+			SpriteGroup::add(ShooterAlien.new(XMAX, 
+				TERRAIN_BOTTOM - TERRAIN_TRIANGLE_MAX_HEIGHT - rand(200)))
+	end		
+	
+	
 	clock.tick
   background.blit(screen, [0, 0]) # clear screen
   DistantTerrain.append_new_landscape 

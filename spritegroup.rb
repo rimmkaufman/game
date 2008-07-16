@@ -77,4 +77,7 @@ class SpriteGroup
 		return @@g[g]
 	end
 	
+	def self::ship
+		return sprites(:ship)[0] # convenience method
+	end
 end
